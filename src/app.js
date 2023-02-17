@@ -41,12 +41,22 @@ function displayTemperature(response){
     humidityElement.innerHTML=response.data.main.humidity;
     windElement.innerHTML=Math.round(response.data.wind.speed);
     dateElement.innerHTML= formatDate( response.data.dt * 1000);
-    iconElement.setAttribute("src",`https://openweathermap.org/img/wn/${response.data.weather[0].icon}/@2x.png`);
+    iconElement.setAttribute("src",`https://openweathermap.org/img/wn/${response.data.weather[0].icon}/10d@2x.png`);
     iconElement.setAttribute("alt", response.data.weather[0].description);
 }
-
-
+function search(city)
 let apiKey = "886fed717cabd3da01be3c4d6805a9d6";
-let city ="Douala"
-let apiUrl=`https://api.openweathermap.org/data/2.5/weather?q=Douala&appid=886fed717cabd3da01be3c4d6805a9d6&units=metric`
+let apiUrl=`https://api.openweathermap.org/data/2.5/weather?q=$(city)&appid=886fed717cabd3da01be3c4d6805a9d6&units=metric`
 axios.get(apiUrl).then(displayTemperature);
+
+function handleSubmit(event){
+    event.preventDefault();
+    let cityInputElement= document.querySelector("#city-input");
+    search(cityInputElement.value)
+    console.log(cityInputElement.value);
+
+}
+search("douala")
+
+let form =document.querySelector("search-form");
+form.addEventListener("submit", handleSubmit);
